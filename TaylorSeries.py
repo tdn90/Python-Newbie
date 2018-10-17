@@ -1,4 +1,4 @@
-from math import pow, factorial , cos
+from math import pow, factorial, cos
 import matplotlib.pyplot as plt
 
 """
@@ -22,17 +22,27 @@ def generateSamples(low, high, count):
     incr = (high - low) / (count - 1)
     return arithmeticSequence(low, incr, count)
 
-def plotRealCosVersusComputed(low, high, number, taylorN):
+def getRealCosVsComputedData(low, high, number, taylorN):
     angles = generateSamples(low, high, number)
     realCosList = []
     myCosList = []
+    diffs = []
     for value in angles:
-        realCosList.append(cos(value))
-        myCosList.append(taylorCos(value, taylorN))
+        realCos = cos(value)
+        myCos = taylorCos(value, taylorN)
+        realCosList.append(realCos)
+        myCosList.append(myCos)
+    return angles, realCosList, myCosList
+
+def plotRealCosVersusComputed(low, high, number, taylorN):
+    angles, realCosList, myCosList = getRealCosVsComputedData(low, high, number, taylorN)
     plt.plot(angles, realCosList, 'red')
     plt.plot(angles, myCosList, 'blue')
     plt.xlabel('Angle values')
     plt.ylabel('Cos(angle)')
+    plt.title('Real Cos curve versus Taylor-style Cos')
     plt.show()
-        
+
+    
+    
         
